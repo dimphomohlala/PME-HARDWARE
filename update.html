@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PME - Update Product</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+<header>
+    <h1>PERNIAGAAN MAJU EDAR SDN. BHD.</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="update.html">Update Product</a>
+        <a href="about.html">About Us</a>
+    </nav>
+</header>
+
+    <section>
+        <h2>Update Product</h2>
+        <form id="productForm">
+            <label>Product ID:</label>
+            <input type="number" id="productID" required>
+            <label>Product Name:</label>
+            <input type="text" id="productName" required>
+            <label>Add-ons:</label>
+            <input type="text" id="addons">
+            <label>Quantity:</label>
+            <input type="number" id="quantity" required>
+            <label>Price:</label>
+            <input type="number" id="price" required>
+            <button type="submit">Update</button>
+        </form>
+    </section>
+    <script src="js/script.js"></script>
+</body>
+</html>
