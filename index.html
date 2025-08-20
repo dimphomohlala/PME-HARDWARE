@@ -1,27 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PME - Home</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PME - Building Materials Store</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
 </head>
 <body>
-    
-<header>
-    <h1>PERNIAGAAN MAJU EDAR SDN. BHD.</h1>
+  <header>
+    <div class="logo">
+      <a href="index.html"><img src="images/logo.webp" alt="PME Store Logo"></a>
+    </div>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="cart.html">Cart</a>
-        <a href="update.html">Update Product</a>
-        <a href="about.html">About Us</a>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
     </nav>
-</header>
+  </header>
 
-    <section>
-        <h2>Available Products</h2>
-        <div id="productCards" class="card-container"></div>
-    </section>
-    <script src="script.js"></script>
+  <section class="hero">
+    <h1>Welcome to PME</h1>
+    <p>Your trusted building materials supplier.</p>
+  </section>
+
+  <section class="products-preview">
+    <h2>Featured Products</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="images/cement.webp" alt="Cement">
+        <h3>Cement</h3>
+        <p>R120 per bag</p>
+      </div>
+      <div class="product-card">
+        <img src="images/bricks.jpg" alt="Bricks">
+        <h3>Bricks</h3>
+        <p>R3.50 each</p>
+      </div>
+      <div class="product-card">
+        <img src="images/steel.jpg" alt="Steel Rods">
+        <h3>Steel Rods</h3>
+        <p>R70 each</p>
+      </div>
+    </div>
+    <a href="products.html" class="btn">View All Products</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 PME Store | All rights reserved.</p>
+  </footer>
 </body>
 </html>
+
+

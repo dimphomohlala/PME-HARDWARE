@@ -1,89 +1,80 @@
-let products = [
-    { id: 1, name: "Wood Plank", addons: "Delivery", quantity: 2, price: 80 },
-    { id: 3, name: "Steel Rod", addons: "Installation", quantity: 3, price: 452 },
-    { id: 4, name: "Roof Tile", addons: "Delivery", quantity: 8, price: 652 },
-];
+document.addEventListener("DOMContentLoaded", () => {
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  // ---- Product Search ----
+  const searchBar = document.getElementById("searchBar");
+  const products = document.querySelectorAll(".product-card");
 
-document.addEventListener("DOMContentLoaded", function () {
-    const productCards = document.getElementById("productCards");
-    const cartItems = document.getElementById("cartItems");
-    const productForm = document.getElementById("productForm");
-    const customerForm = document.getElementById("customerForm");
-    const receipt = document.getElementById("receipt");
+  if (searchBar) {
+    searchBar.addEventListener("keyup", (e) => {
+      const term = e.target.value.toLowerCase();
+      products.forEach(product => {
+        const name = product.getAttribute("data-name").toLowerCase();
+        product.style.display = name.includes(term) ? "block" : "none";
+      });
+    });
+  }
 
-    if (productCards) {
-        productCards.innerHTML = "";
-        products.forEach(p => {
-            const card = document.createElement("div");
-            card.classList.add("card");
-            card.innerHTML = `
-                <h3>${p.name}</h3>
-                <p><strong>Add-ons:</strong> ${p.addons}</p>
-                <p><strong>Quantity:</strong> ${p.quantity}</p>
-                <p><strong>Price:</strong> RM ${p.price}</p>
-                <button onclick="addToCart(${p.id})">Order</button>
-            `;
-            productCards.appendChild(card);
-        });
-    }
+  // ---- Form Validations ----
+  const registerForm = document.querySelector("form[action='#']"); // assume register form
+  if (registerForm) {
+    registerForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // prevent default submit
 
-    if (cartItems) {
-        renderCart(cartItems);
-    }
+      const name = registerForm.querySelector('input[type="text"]').value.trim();
+      const email = registerForm.querySelector('input[type="email"]').value.trim();
+      const password = registerForm.querySelector('input[type="password"]').value.trim();
 
-    if (productForm) {
-        productForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const newProduct = {
-                id: parseInt(document.getElementById("productID").value),
-                name: document.getElementById("productName").value,
-                addons: document.getElementById("addons").value,
-                quantity: parseInt(document.getElementById("quantity").value),
-                price: parseFloat(document.getElementById("price").value)
-            };
-            const index = products.findIndex(p => p.id === newProduct.id);
-            if (index !== -1) {
-                products[index] = newProduct;
-            }
-            alert("Product updated!");
-            productForm.reset();
-        });
-    }
+      // Name validation
+      if (name.length < 2) {
+        alert("Please enter a valid full name.");
+        return;
+      }
 
-    if (customerForm) {
-        customerForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const name = document.getElementById("custName").value;
-            const email = document.getElementById("custEmail").value;
-            const address = document.getElementById("custAddress").value;
-            receipt.innerHTML = `
-                <h3>Receipt</h3>
-                <p><strong>Name:</strong> ${name}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Address:</strong> ${address}</p>
-                <h4>Ordered Items:</h4>
-                <ul>${cart.map(item => `<li>${item.name} - RM ${item.price}</li>`).join("")}</ul>
-                <p><strong>Total:</strong> RM ${cart.reduce((sum, i) => sum + i.price, 0)}</p>
-            `;
-            cart = [];
-            localStorage.setItem("cart", JSON.stringify(cart));
-            customerForm.reset();
-            document.getElementById("cartItems").innerHTML = "";
-        });
-    }
+      // Email validation
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Password validation
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      // At least 8 chars, 1 uppercase, 1 lowercase, 1 number
+      if (!password.match(passwordPattern)) {
+        alert("Password must be at least 8 characters and include uppercase, lowercase, and a number.");
+        return;
+      }
+
+      alert("Registration successful!");
+      registerForm.reset();
+    });
+  }
+
+  // ---- Login Form Validation ----
+  const loginForm = document.querySelector("form.login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = loginForm.querySelector('input[type="email"]').value.trim();
+      const password = loginForm.querySelector('input[type="password"]').value.trim();
+
+      if (email === "" || password === "") {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Optional: validate email format
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!email.match(emailPattern)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      alert("Login successful!");
+      loginForm.reset();
+    });
+  }
+
 });
 
-function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(product.name + " added to cart!");
-}
-
-function renderCart(container) {
-    container.innerHTML = cart.length ? cart.map(item => `
-        <p>${item.name} - RM ${item.price}</p>
-    `).join("") : "<p>Your cart is empty.</p>";
-}
